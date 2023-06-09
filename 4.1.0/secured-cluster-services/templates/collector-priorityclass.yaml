@@ -1,0 +1,11 @@
+{{- include "srox.init" . -}}
+
+{{- if and ._rox.collector.priorityClass ._rox.collector.priorityClass.create }}
+apiVersion: scheduling.k8s.io/v1
+description: Used for Stackrox collector daemonset scheduling priority.
+kind: PriorityClass
+metadata:
+  name: {{ ._rox.collector.priorityClass.name | default "stackrox-collector" | quote }}
+preemptionPolicy: {{ ._rox.collector.priorityClass.preemptionPolicyValue | default "PreemptLowerPriority" }}
+value: {{ ._rox.collector.priorityClass.value | default 0 }}
+{{- end }}
